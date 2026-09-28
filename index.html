@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>City Grill Kebab — Eschau</title>
+<meta name="description" content="City Grill Kebab à Eschau — kebab, tacos, pizzas, pides et plus. Sur place, à emporter et en livraison. 68 Rue de la 1ère Division Blindée, Eschau.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --charcoal: #1a1512;
+    --charcoal-2: #4e4641;
+    --ember: #99ff00ca;
+    --ember-dim: #93bb1c;
+    --cream: #f2e8dc;
+    --smoke: #a89b8c;
+    --line: #3a3129;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ background:var(--charcoal); color:var(--cream); font-family:'Work Sans', sans-serif; line-height:1.6; }
+  h1, h2, h3{ font-family:'Fraunces', serif; font-weight:600; line-height:1.1; }
+  a{ color:inherit; }
+
+  .wrap{ max-width:1000px; margin:0 auto; padding:0 24px; }
+
+  nav{ position:sticky; top:0; z-index:10; background:rgba(26,21,18,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--line); }
+  nav .wrap{ display:flex; justify-content:space-between; align-items:center; height:72px; }
+  .logo{ font-family:'Fraunces', serif; font-size:1.25rem; font-weight:700; }
+  .logo span{ color:var(--ember); }
+  nav ul{ list-style:none; display:flex; gap:28px; }
+  nav a{ text-decoration:none; font-size:0.95rem; color:var(--smoke); transition:color 0.2s; }
+  nav a:hover, nav a:focus-visible{ color:var(--cream); }
+  .nav-toggle{ display:none; }
+
+  header.hero{ padding:70px 0 60px; position:relative; overflow:hidden; }
+  header.hero::before{
+    content:""; position:absolute; top:-30%; right:-10%; width:600px; height:600px;
+    background:radial-gradient(circle, var(--ember-dim) 0%, transparent 70%); opacity:0.35; pointer-events:none;
+  }
+  .hero .wrap{ position:relative; }
+  .hero-eyebrow{ color:var(--ember); font-size:0.95rem; margin-bottom:14px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .rating{ color:var(--smoke); }
+  h1.title{ font-size:clamp(2.4rem, 5.5vw, 3.8rem); max-width:14ch; margin-bottom:20px; }
+  .hero-sub{ max-width:50ch; color:var(--smoke); font-size:1.05rem; margin-bottom:28px; }
+  .badges{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:32px; }
+  .badge{ border:1px solid var(--line); padding:7px 14px; font-size:0.85rem; color:var(--smoke); }
+  .cta-row{ display:flex; gap:16px; flex-wrap:wrap; }
+  .btn{ display:inline-block; padding:14px 28px; border-radius:2px; text-decoration:none; font-size:0.95rem; font-weight:500; transition:transform 0.15s, background 0.2s; }
+  .btn-primary{ background:var(--ember); color:var(--cream); }
+  .btn-primary:hover{ background:#d9500f; transform:translateY(-1px); }
+  .btn-ghost{ border:1px solid var(--line); color:var(--cream); }
+  .btn-ghost:hover{ border-color:var(--smoke); }
+
+  section{ padding:64px 0; border-top:1px solid var(--line); }
+  .section-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:36px; flex-wrap:wrap; gap:12px; }
+  .section-head h2{ font-size:2rem; }
+  .section-head p{ color:var(--smoke); max-width:36ch; }
+
+  .tabs{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:36px; border-bottom:1px solid var(--line); padding-bottom:16px; }
+  .tab-btn{
+    background:none; border:1px solid var(--line); color:var(--smoke);
+    padding:9px 16px; font-size:0.88rem; font-family:'Work Sans', sans-serif;
+    cursor:pointer; transition:all 0.15s; border-radius:2px;
+  }
+  .tab-btn:hover{ color:var(--cream); }
+  .tab-btn.active{ background:var(--ember); border-color:var(--ember); color:var(--cream); }
+
+  .menu-panel{ display:none; }
+  .menu-panel.active{ display:block; }
+  .menu-note{ color:var(--smoke); font-size:0.85rem; margin-bottom:24px; font-style:italic; }
+
+  .menu-group{ margin-bottom:36px; }
+  .menu-group h3{ color:var(--ember); font-size:1.1rem; margin-bottom:16px; font-weight:600; }
+  .menu-item{ display:flex; align-items:baseline; gap:10px; padding:13px 0; border-bottom:1px dotted var(--line); }
+  .menu-item .name{ font-weight:500; }
+  .menu-item .desc{ display:block; color:var(--smoke); font-size:0.87rem; margin-top:3px; }
+  .menu-item .fill{ flex:1; border-bottom:1px dotted var(--line); transform:translateY(-4px); }
+  .menu-item .price{ font-family:'Fraunces', serif; color:var(--cream); white-space:nowrap; }
+  .menu-item .price.tbd{ color:var(--smoke); font-family:'Work Sans', sans-serif; font-size:0.85rem; }
+
+  .about-grid{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:start; }
+  .about-grid p{ color:var(--smoke); margin-bottom:16px; }
+  .stat-list{ display:flex; flex-direction:column; gap:24px; }
+  .stat{ border-left:2px solid var(--ember); padding-left:18px; }
+  .stat .num{ font-family:'Fraunces', serif; font-size:1.8rem; display:block; }
+  .stat .label{ color:var(--smoke); font-size:0.9rem; }
+
+  .info-grid{ display:grid; grid-template-columns:1fr 1fr; gap:56px; }
+  table.hours{ width:100%; border-collapse:collapse; }
+  table.hours tr{ border-bottom:1px solid var(--line); }
+  table.hours td{ padding:11px 0; font-size:0.95rem; }
+  table.hours td:first-child{ color:var(--smoke); }
+  table.hours td:last-child{ text-align:right; }
+
+  .contact-list{ list-style:none; }
+  .contact-list li{ padding:11px 0; border-bottom:1px solid var(--line); font-size:0.95rem; }
+  .contact-list li span{ display:block; color:var(--smoke); font-size:0.82rem; margin-bottom:2px; }
+  .contact-list a{ text-decoration:none; }
+  .contact-list a:hover{ color:var(--ember); }
+
+  .map-frame{ margin-top:24px; border:1px solid var(--line); filter:grayscale(0.4) invert(0.9) contrast(0.85); }
+  .map-frame iframe{ width:100%; height:240px; border:0; display:block; }
+
+  footer{ border-top:1px solid var(--line); padding:36px 0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; color:var(--smoke); font-size:0.85rem; }
+
+  @media (max-width: 720px){
+    nav ul{ position:absolute; top:72px; left:0; right:0; flex-direction:column; background:var(--charcoal-2); padding:16px 24px; gap:16px; border-bottom:1px solid var(--line); display:none; }
+    nav ul.open{ display:flex; }
+    .nav-toggle{ display:block; background:none; border:0; color:var(--cream); font-size:1.4rem; cursor:pointer; }
+    .about-grid, .info-grid{ grid-template-columns:1fr; gap:36px; }
+  }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } *{ transition:none !important; } }
+  :focus-visible{ outline:2px solid var(--ember); outline-offset:2px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo">City <span>Grill</span> Kebab</div>
+    <button class="nav-toggle" aria-label="Ouvrir le menu" onclick="document.getElementById('navlist').classList.toggle('open')">☰</button>
+    <ul id="navlist">
+      <li><a href="#menu">Carte</a></li>
+      <li><a href="#about">L'établissement</a></li>
+      <li><a href="#infos">Horaires</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="hero-eyebrow">Eschau, Bas-Rhin <span class="rating">· 4,3 ★ (257 avis)</span></p>
+    <h1 class="title">Kebab, tacos, pizzas et grillades à Eschau.</h1>
+    <p class="hero-sub">Doner, tacos, pizzas, pides et tartes flambées préparés sur place. Sur place, à emporter ou en livraison.</p>
+    <div class="badges">
+      <span class="badge">Repas sur place</span>
+      <span class="badge">Vente à emporter</span>
+      <span class="badge">Livraison</span>
+    </div>
+    <div class="cta-row">
+      <a href="tel:+33980776861" class="btn btn-primary">Appeler — 09 80 77 68 61</a>
+      <a href="#menu" class="btn btn-ghost">Voir la carte</a>
+    </div>
+  </div>
+</header>
+
+<section id="menu">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>La carte</h2>
+      <p>Toute la carte, par catégorie.</p>
+    </div>
+
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" data-tab="kebab">Kebab &amp; Sandwichs</button>
+      <button class="tab-btn" data-tab="tacos">Tacos</button>
+      <button class="tab-btn" data-tab="assiettes">Assiettes</button>
+      <button class="tab-btn" data-tab="pides">Pides &amp; Tartes flambées</button>
+      <button class="tab-btn" data-tab="pizzas">Pizzas</button>
+      <button class="tab-btn" data-tab="menus">Menus</button>
+      <button class="tab-btn" data-tab="autres">Entrées &amp; Desserts</button>
+    </div>
+
+    <div class="menu-panel active" id="panel-kebab">
+      <div class="menu-group">
+        <h3>Kebab</h3>
+        <div class="menu-item"><span class="name">Kebab Maxi<span class="desc">boeuf et/ou poulet</span></span><span class="fill"></span><span class="price">14,00 €</span></div>
+        <div class="menu-item"><span class="name">Yufka<span class="desc">boeuf et/ou poulet</span></span><span class="fill"></span><span class="price">8,00 €</span></div>
+        <div class="menu-item"><span class="name">Yufka Maxi<span class="desc">boeuf et/ou poulet</span></span><span class="fill"></span><span class="price">14,00 €</span></div>
+        <div class="menu-item"><span class="name">Lahmacun<span class="desc">boeuf et/ou poulet</span></span><span class="fill"></span><span class="price">8,50 €</span></div>
+        <div class="menu-item"><span class="name">Lahmacun crudités</span><span class="fill"></span><span class="price">5,50 €</span></div>
+      </div>
+      <div class="menu-group">
+        <h3>Sandwichs</h3>
+        <div class="menu-item"><span class="name">Escalope poulet</span><span class="fill"></span><span class="price">8,00 €</span></div>
+        <div class="menu-item"><span class="name">Köfte</span><span class="fill"></span><span class="price">8,00 €</span></div>
+        <div class="menu-item"><span class="name">Cordon bleu</span><span class="fill"></span><span class="price">8,00 €</span></div>
+        <div class="menu-item"><span class="name">Merguez</span><span class="fill"></span><span class="price">8,00 €</span></div>
+        <div class="menu-item"><span class="name">Végétarien<span class="desc">crudités, feta</span></span><span class="fill"></span><span class="price">6,00 €</span></div>
+        <div class="menu-item"><span class="name">Hamburger<span class="desc">cheddar, steak haché, salade, sauce</span></span><span class="fill"></span><span class="price">5,00 €</span></div>
+      </div>
+    </div>
+
+    <div class="menu-panel" id="panel-tacos">
+      <div class="menu-group">
+        <h3>Tacos</h3>
+        <div class="menu-item"><span class="name">Tacos<span class="desc">1 viande au choix</span></span><span class="fill"></span><span class="price">8,50 €</span></div>
+        <div class="menu-item"><span class="name">Tacos Maxi<span class="desc">3 viandes au choix</span></span><span class="fill"></span><span class="price">15,00 €</span></div>
+      </div>
+      <div class="menu-group">
+        <h3>Viandes au choix</h3>
+        <p style="color:var(--smoke); font-size:0.92rem;">Boeuf et/ou poulet, escalope de poulet marinée, köfte, cordon bleu, merguez, tenders, nuggets.</p>
+      </div>
+      <div class="menu-group">
+        <h3>Sauces au choix</h3>
+        <p style="color:var(--smoke); font-size:0.92rem;">Blanche, rouge, ketchup, mayonnaise, andalouse, algérienne, tartare, samouraï, brésilienne, harissa, burger, barbecue, curry.</p>
+      </div>
+    </div>
+
+    <div class="menu-panel" id="panel-assiettes">
+      <div class="menu-group">
+        <h3>Assiettes</h3>
+        <p class="menu-note">Accompagnées de crudités, frites ou bulgur.</p>
+        <div class="menu-item"><span class="name">Doner</span><span class="fill"></span><span class="price">14,00 €</span></div>
+        <div class="menu-item"><span class="name">Lahmacun</span><span class="fill"></span><span class="price">14,00 €</span></div>
+        <div class="menu-item"><span class="name">Nuggets</span><span class="fill"></span><span class="price">13,00 €</span></div>
+        <div class="menu-item"><span class="name">Cordon bleu</span><span class="fill"></span><span class="price">14,00 €</span></div>
+        <div class="menu-item"><span class="name">Merguez</span><span class="fill"></span><span class="price">14,00 €</span></div>
+        <div class="menu-item"><span class="name">Köfte</span><span class="fill"></span><span class="price">14,00 €</span></div>
+        <div class="menu-item"><span class="name">Escalope</span><span class="fill"></span><span class="price">14,00 €</span></div>
+        <div class="menu-item"><span class="name">Végétarienne</span><span class="fill"></span><span class="price">10,00 €</span></div>
+        <div class="menu-item"><span class="name">City<span class="desc">merguez, escalope, köfte, poulet, boeuf</span></span><span class="fill"></span><span class="price">17,00 €</span></div>
+      </div>
+    </div>
+
+    <div class="menu-panel" id="panel-pides">
+      <div class="menu-group">
+        <h3>Pides</h3>
+        <div class="menu-item"><span class="name">Pide doner<span class="desc">kebab boeuf et/ou poulet, mozzarella</span></span><span class="fill"></span><span class="price">8,00 €</span></div>
+        <div class="menu-item"><span class="name">Pide viande hachée<span class="desc">viande hachée, mozzarella</span></span><span class="fill"></span><span class="price">8,00 €</span></div>
+        <div class="menu-item"><span class="name">Pide sucuk<span class="desc">sucuk, mozzarella</span></span><span class="fill"></span><span class="price">8,00 €</span></div>
+        <div class="menu-item"><span class="name">Pide fromage<span class="desc">mozzarella, emmental, crème fraîche</span></span><span class="fill"></span><span class="price">8,00 €</span></div>
+        <div class="menu-item"><span class="name">Pide composé<span class="desc">mozzarella et 2 viandes au choix</span></span><span class="fill"></span><span class="price">9,00 €</span></div>
+      </div>
+      <div class="menu-group">
+        <h3>Tartes flambées</h3>
+        <div class="menu-item"><span class="name">Classic<span class="desc">crème fraîche, oignon, lardons de dinde</span></span><span class="fill"></span><span class="price">7,00 €</span></div>
+        <div class="menu-item"><span class="name">Gratinée<span class="desc">crème fraîche, oignon, lardons de dinde, emmental</span></span><span class="fill"></span><span class="price">7,50 €</span></div>
+        <div class="menu-item"><span class="name">Forestière<span class="desc">crème fraîche, oignon, lardons de dinde, champignons, emmental</span></span><span class="fill"></span><span class="price">8,00 €</span></div>
+        <div class="menu-item"><span class="name">Saumon<span class="desc">crème fraîche, saumon, oignon, emmental</span></span><span class="fill"></span><span class="price">9,00 €</span></div>
+        <div class="menu-item"><span class="name">Chèvre miel<span class="desc">crème fraîche, fromage de chèvre, emmental</span></span><span class="fill"></span><span class="price">9,00 €</span></div>
+      </div>
+    </div>
+
+    <div class="menu-panel" id="panel-pizzas">
+      <div class="menu-group">
+        <h3>Pizzas</h3>
+        <div class="menu-item"><span class="name">Marguarita<span class="desc">sauce tomate, mozzarella</span></span><span class="fill"></span><span class="price">8,00 €</span></div>
+        <div class="menu-item"><span class="name">4 Saisons<span class="desc">sauce tomate, mozzarella, tomate fraîche, olives, champignon, poivron, maïs</span></span><span class="fill"></span><span class="price">9,00 €</span></div>
+        <div class="menu-item"><span class="name">Thon<span class="desc">sauce tomate, mozzarella, oignon, olives, thon</span></span><span class="fill"></span><span class="price">10,00 €</span></div>
+        <div class="menu-item"><span class="name">4 Fromages<span class="desc">sauce tomate, mozzarella, chèvre, roquefort, emmental</span></span><span class="fill"></span><span class="price">10,00 €</span></div>
+        <div class="menu-item"><span class="name">Reine<span class="desc">sauce tomate, jambon de dinde, mozzarella, champignon</span></span><span class="fill"></span><span class="price">10,00 €</span></div>
+        <div class="menu-item"><span class="name">Campagnarde<span class="desc">sauce tomate, mozzarella, oignon, lardons de dinde, champignon</span></span><span class="fill"></span><span class="price">10,00 €</span></div>
+        <div class="menu-item"><span class="name">Orientale<span class="desc">sauce tomate, mozzarella, merguez, champignon, poivron</span></span><span class="fill"></span><span class="price">10,00 €</span></div>
+        <div class="menu-item"><span class="name">Bolognaise<span class="desc">sauce tomate, viande hachée, mozzarella, champignon</span></span><span class="fill"></span><span class="price">10,00 €</span></div>
+        <div class="menu-item"><span class="name">Western<span class="desc">sauce tomate, émincé de poulet, champignon, olives, tomate fraîche, mozzarella</span></span><span class="fill"></span><span class="price">10,00 €</span></div>
+        <div class="menu-item"><span class="name">Pizza sucuk<span class="desc">sauce tomate, sucuk, mozzarella, champignon</span></span><span class="fill"></span><span class="price">10,00 €</span></div>
+        <div class="menu-item"><span class="name">Pizza kebab<span class="desc">sauce tomate, boeuf ou poulet, champignon, mozzarella</span></span><span class="fill"></span><span class="price">10,00 €</span></div>
+        <div class="menu-item"><span class="name">Calzone, Norvégienne, Savoyarde, Paysanne, Chicken curry, Buffalo, Chèvre miel, Orient, Barea, City<span class="desc">disponibles sur place</span></span><span class="fill"></span><span class="price tbd">voir sur place</span></div>
+      </div>
+    </div>
+
+    <div class="menu-panel" id="panel-menus">
+      <div class="menu-group">
+        <h3>Formules menus</h3>
+        <p class="menu-note">Chaque menu inclut frites et boisson 33cl.</p>
+        <div class="menu-item"><span class="name">Menu doner</span><span class="fill"></span><span class="price">12,00 €</span></div>
+        <div class="menu-item"><span class="name">Menu maxi doner</span><span class="fill"></span><span class="price">17,00 €</span></div>
+        <div class="menu-item"><span class="name">Menu yufka</span><span class="fill"></span><span class="price">12,00 €</span></div>
+        <div class="menu-item"><span class="name">Menu tacos</span><span class="fill"></span><span class="price">13,00 €</span></div>
+        <div class="menu-item"><span class="name">Menu maxi tacos</span><span class="fill"></span><span class="price">18,00 €</span></div>
+        <div class="menu-item"><span class="name">Menu burger</span><span class="fill"></span><span class="price">9,00 €</span></div>
+      </div>
+    </div>
+
+    <div class="menu-panel" id="panel-autres">
+      <div class="menu-group">
+        <h3>Entrées</h3>
+        <div class="menu-item"><span class="name">Petite frites</span><span class="fill"></span><span class="price">3,00 €</span></div>
+        <div class="menu-item"><span class="name">Moyenne frites</span><span class="fill"></span><span class="price">4,00 €</span></div>
+        <div class="menu-item"><span class="name">Grande frites</span><span class="fill"></span><span class="price">7,00 €</span></div>
+        <div class="menu-item"><span class="name">Salade</span><span class="fill"></span><span class="price">3,00 €</span></div>
+        <div class="menu-item"><span class="name">Petite barquette kebab</span><span class="fill"></span><span class="price">7,00 €</span></div>
+        <div class="menu-item"><span class="name">Grande barquette kebab</span><span class="fill"></span><span class="price">9,00 €</span></div>
+        <div class="menu-item"><span class="name">Nuggets x6</span><span class="fill"></span><span class="price">5,00 €</span></div>
+        <div class="menu-item"><span class="name">Nuggets x8</span><span class="fill"></span><span class="price">6,00 €</span></div>
+      </div>
+      <div class="menu-group">
+        <h3>Desserts</h3>
+        <div class="menu-item"><span class="name">Tiramisu<span class="desc">oreo, cookie, speculoos, nutella</span></span><span class="fill"></span><span class="price">3,00 €</span></div>
+      </div>
+      <div class="menu-group">
+        <h3>Suppléments</h3>
+        <div class="menu-item"><span class="name">Feta, piments verts, cheddar, emmental</span><span class="fill"></span><span class="price">0,50 €</span></div>
+        <div class="menu-item"><span class="name">Supplément viande</span><span class="fill"></span><span class="price">1,50 €</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <div>
+      <h2 style="font-size:2rem; margin-bottom:20px;">Une adresse conviviale à Eschau</h2>
+      <p>City Grill Kebab propose une cuisine généreuse et variée : kebab, tacos, pizzas, pides et tartes flambées, préparés sur place chaque jour.</p>
+      <p>Le restaurant accueille aussi bien les repas rapides sur place que les commandes à emporter et en livraison.</p>
+    </div>
+    <div class="stat-list">
+      <div class="stat"><span class="num">4,3 ★</span><span class="label">Note moyenne sur 257 avis</span></div>
+      <div class="stat"><span class="num">3</span><span class="label">Façons de commander : sur place, à emporter, livraison</span></div>
+      <div class="stat"><span class="num">10+</span><span class="label">Catégories à la carte, du kebab à la pizza</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="infos">
+  <div class="wrap info-grid">
+    <div>
+      <h2 style="font-size:1.6rem; margin-bottom:20px;">Horaires</h2>
+      <table class="hours">
+        <tr><td>Lundi</td><td>Fermé</td></tr>
+        <tr><td>Mardi</td><td>À partir de 11h00 — à confirmer</td></tr>
+        <tr><td>Mercredi</td><td>À confirmer</td></tr>
+        <tr><td>Jeudi</td><td>À confirmer</td></tr>
+        <tr><td>Vendredi</td><td>À confirmer</td></tr>
+        <tr><td>Samedi</td><td>À confirmer</td></tr>
+        <tr><td>Dimanche</td><td>À confirmer</td></tr>
+      </table>
+      <p style="color:var(--smoke); font-size:0.82rem; margin-top:14px;">Horaires à finaliser avec l'établissement.</p>
+    </div>
+    <div id="contact">
+      <h2 style="font-size:1.6rem; margin-bottom:20px;">Contact</h2>
+      <ul class="contact-list">
+        <li><span>Adresse</span>68 Rue de la 1ère Division Blindée, 67114 Eschau</li>
+        <li><span>Téléphone</span><a href="tel:+33980776861">09 80 77 68 61</a></li>
+      </ul>
+      <div class="map-frame">
+        <iframe
+          src="https://www.google.com/maps?q=68+Rue+de+la+1ere+Division+Blindee+67114+Eschau&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Localisation City Grill Kebab à Eschau">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:12px;">
+    <span>© 2026 City Grill Kebab — Eschau</span>
+    <span>68 Rue de la 1ère Division Blindée, 67114 Eschau</span>
+  </div>
+</footer>
+
+<script>
+  const tabs = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.menu-panel');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
